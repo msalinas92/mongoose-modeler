@@ -1,6 +1,7 @@
 const electron = require('electron')
 const app = electron.app
 const BrowserWindow = electron.BrowserWindow
+const dialog = electron.dialog
 const Menu = electron.Menu;
 
 const path = require('path')
@@ -21,14 +22,69 @@ function createWindow () {
   
   const menuTemplate = [
 	 {
-        label: 'Electron',
+        label: 'File',
         submenu: [
             {
-                label: 'About ...',
+                label: 'Open Proyect',
+				icon : 'icons/actions/16/document-open.png',
+                click: () => {
+                    console.log('Open project');
+                }
+            },{
+                label: 'Save Proyect',
+				icon : 'icons/actions/16/stock_save.png',
+                click: () => {
+                    console.log('Save project');
+                }
+            },{
+                label: 'Save Proyect As',
+				icon : 'icons/actions/16/stock_save.png',
+                click: () => {
+                    console.log('Save project');
+                }
+            }, {
+                type: 'separator'
+            }, {
+                label: 'Exit',
+				icon : 'icons/actions/16/remove.png',
+                click: () => {
+                    app.quit();
+                }
+            }
+        ]
+    },
+	{
+        label: 'Edit',
+        submenu: [
+            {
+                label: 'Undo',
                 click: () => {
                     console.log('About Clicked');
                 }
             }, {
+                label: 'Redo',
+                click: () => {
+                    console.log('About Clicked');
+                }
+            }, {
+                type: 'separator'
+            },
+			{
+                label: 'Copy',
+                click: () => {
+                    console.log('About Clicked');
+                }
+            }, {
+                label: 'Cut',
+                click: () => {
+                    console.log('About Clicked');
+                }
+            }, {
+                label: 'Paste',
+                click: () => {
+                    console.log('About Clicked');
+                }
+            },  {
                 type: 'separator'
             }, {
                 label: 'Quit',
@@ -38,13 +94,19 @@ function createWindow () {
             }
         ]
     },
-	 {
-        label: 'Electron',
+	{
+        label: 'Help',
         submenu: [
             {
                 label: 'About ...',
                 click: () => {
-                    console.log('About Clicked');
+                    dialog.showMessageBox({
+						type: 'warning',
+						buttons: ['OK', 'Cancel'],        
+						message: 'Window is not responsing',
+						cancelId: 1,
+						detail: 'The window is not responding. Would you like to force close it or just keep waiting?'
+					  })
                 }
             }, {
                 type: 'separator'
