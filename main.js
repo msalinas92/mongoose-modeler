@@ -3,6 +3,8 @@ const app = electron.app
 const BrowserWindow = electron.BrowserWindow
 const dialog = electron.dialog
 const Menu = electron.Menu;
+const nativeImage = electron.nativeImage
+const {Tray} = require('electron')
 
 const path = require('path')
 const url = require('url')
@@ -11,7 +13,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({width: 800, height: 600, icon : 'icons/main.png'})
   
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -20,6 +22,7 @@ function createWindow () {
     slashes: true
   }))
   
+  //Declare menu from electron
   const menuTemplate = [
 	 {
         label: 'File',
@@ -46,7 +49,7 @@ function createWindow () {
                 type: 'separator'
             }, {
                 label: 'Exit',
-				icon : 'icons/actions/16/remove.png',
+				icon : 'icons/actions/16/window-close.png',
                 click: () => {
                     app.quit();
                 }
@@ -58,11 +61,13 @@ function createWindow () {
         submenu: [
             {
                 label: 'Undo',
+				icon : 'icons/actions/16/edit-undo.png',
                 click: () => {
                     console.log('About Clicked');
                 }
             }, {
                 label: 'Redo',
+				icon : 'icons/actions/16/edit-redo.png',
                 click: () => {
                     console.log('About Clicked');
                 }
@@ -71,25 +76,21 @@ function createWindow () {
             },
 			{
                 label: 'Copy',
+				icon : 'icons/actions/16/edit-copy.png',
                 click: () => {
                     console.log('About Clicked');
                 }
             }, {
                 label: 'Cut',
+				icon : 'icons/actions/16/edit-cut.png',
                 click: () => {
                     console.log('About Clicked');
                 }
             }, {
                 label: 'Paste',
+				icon : 'icons/actions/16/edit-paste.png',
                 click: () => {
                     console.log('About Clicked');
-                }
-            },  {
-                type: 'separator'
-            }, {
-                label: 'Quit',
-                click: () => {
-                    app.quit();
                 }
             }
         ]
@@ -99,21 +100,15 @@ function createWindow () {
         submenu: [
             {
                 label: 'About ...',
+				icon : 'icons/actions/16/help-about.png',
                 click: () => {
-                    dialog.showMessageBox({
-						type: 'warning',
-						buttons: ['OK', 'Cancel'],        
-						message: 'Window is not responsing',
-						cancelId: 1,
-						detail: 'The window is not responding. Would you like to force close it or just keep waiting?'
+                    dialog.showMessageBox(mainWindow,{
+						title : 'Acerca de',
+						type: 'none',
+						icon : nativeImage.createFromPath('icons/icon.png'),
+						message: 'About',
+						detail: 'Mongoose modeler is a aplication from Fenden Proyect to make models based on Mongoose Driver to NodeJS'
 					  })
-                }
-            }, {
-                type: 'separator'
-            }, {
-                label: 'Quit',
-                click: () => {
-                    app.quit();
                 }
             }
         ]
